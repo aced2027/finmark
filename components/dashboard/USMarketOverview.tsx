@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, memo } from 'react';
 
-function TradingViewMarketOverview() {
+function USMarketOverview() {
     const container = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -24,14 +24,14 @@ function TradingViewMarketOverview() {
         "height": "100%",
         "tabs": [
           {
-            "title": "NSE Indices",
+            "title": "US Indices",
             "symbols": [
-              { "s": "NSE:NIFTY", "d": "Nifty 50" },
-              { "s": "NSE:BANKNIFTY", "d": "Bank Nifty" },
-              { "s": "BSE:SENSEX", "d": "Sensex" },
-              { "s": "NSE:NIFTYMIDCAP50", "d": "Nifty Midcap 50" }
+              { "s": "FOREXCOM:SPXUSD", "d": "S&P 500" },
+              { "s": "FOREXCOM:NSXUSD", "d": "NASDAQ 100" },
+              { "s": "FOREXCOM:DJI", "d": "Dow Jones" },
+              { "s": "FOREXCOM:US2000USD", "d": "Russell 2000" }
             ],
-            "originalTitle": "NSE Indices"
+            "originalTitle": "US Indices"
           }
         ]
       }`;
@@ -45,4 +45,4 @@ function TradingViewMarketOverview() {
     );
 }
 
-export default memo(TradingViewMarketOverview);
+export default memo(USMarketOverview);
