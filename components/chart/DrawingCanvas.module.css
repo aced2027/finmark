@@ -1,0 +1,18 @@
+.canvas {
+    position: absolute;
+    top: 24px;
+    /* height of the infoBar */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: calc(100% - 24px);
+    pointer-events: none;
+    z-index: 10;
+    overflow: visible;
+}
+
+.drawing {
+    pointer-events: all;
+    cursor: crosshair;
+}

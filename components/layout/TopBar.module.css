@@ -1,0 +1,173 @@
+/* TradingView-exact top bar */
+.topbar {
+    display: flex;
+    align-items: center;
+    height: 38px;
+    min-height: 38px;
+    padding: 0 8px;
+    background: #131722;
+    border-bottom: 1px solid #2a2e39;
+    gap: 4px;
+    flex-shrink: 0;
+    z-index: 100;
+    user-select: none;
+}
+
+/* Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    text-decoration: none;
+    flex-shrink: 0;
+    padding: 0 4px;
+}
+
+.logoText {
+    font-size: 14px;
+    font-weight: 800;
+    color: #d1d4dc;
+    letter-spacing: -0.2px;
+}
+
+/* Vertical separator */
+.vsep {
+    width: 1px;
+    height: 20px;
+    background: #2a2e39;
+    flex-shrink: 0;
+    margin: 0 2px;
+}
+
+.spacer {
+    flex: 1;
+}
+
+/* Navigation */
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.navLink {
+    padding: 5px 9px;
+    font-size: 13px;
+    color: #787b86;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: color 0.1s, background 0.1s;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.navLink:hover {
+    color: #d1d4dc;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.navActive {
+    color: #d1d4dc !important;
+}
+
+/* Right section */
+.right {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Icon+text buttons (Alert, Replay) */
+.iconBtn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 8px;
+    background: none;
+    border: none;
+    border-radius: 4px;
+    color: #787b86;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.1s, background 0.1s;
+    white-space: nowrap;
+}
+
+.iconBtn:hover {
+    color: #d1d4dc;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.replayActive {
+    color: #f7525f !important;
+    background: rgba(247, 82, 95, 0.1) !important;
+}
+
+/* Layout switcher */
+.layoutGroup {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+}
+
+.layoutBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    background: none;
+    border: none;
+    color: #787b86;
+    cursor: pointer;
+    transition: color 0.1s, background 0.1s;
+}
+
+.layoutBtn:hover {
+    color: #d1d4dc;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.layoutActive {
+    color: #2962ff !important;
+    background: rgba(41, 98, 255, 0.12) !important;
+}
+
+/* Publish button */
+.publishBtn {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 14px;
+    background: #2962ff;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.12s;
+    white-space: nowrap;
+}
+
+.publishBtn:hover {
+    background: #1e53e5;
+    text-decoration: none;
+}
+
+/* Avatar */
+.avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #2962ff;
+    border: none;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}

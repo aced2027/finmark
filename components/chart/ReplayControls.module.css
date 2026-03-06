@@ -1,0 +1,113 @@
+.container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    padding: 0 8px 8px;
+}
+
+.bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 6px 12px;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #f7c948;
+    white-space: nowrap;
+}
+
+.barCount {
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    color: #8b949e;
+    white-space: nowrap;
+    min-width: 70px;
+}
+
+.progress {
+    flex: 1;
+    position: relative;
+    height: 6px;
+    background: #21262d;
+    border-radius: 3px;
+    min-width: 100px;
+}
+
+.progressFill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: #388bfd;
+    border-radius: 3px;
+    pointer-events: none;
+}
+
+.range {
+    position: absolute;
+    inset: -6px 0;
+    width: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.btn {
+    background: #22272e;
+    border: 1px solid #30363d;
+    color: #e6edf3;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.btn:hover {
+    background: #2d333b;
+}
+
+.playBtn {
+    background: #388bfd;
+    border-color: #388bfd;
+    color: #fff;
+    min-width: 32px;
+}
+
+.playBtn:hover {
+    background: #58a6ff;
+}
+
+.exitBtn {
+    background: transparent;
+    border: 1px solid #30363d;
+    color: #8b949e;
+    border-radius: 4px;
+    padding: 3px 7px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.exitBtn:hover {
+    color: #ef5350;
+    border-color: #ef5350;
+}
+
+.speedSelect {
+    background: #22272e;
+    border: 1px solid #30363d;
+    color: #e6edf3;
+    border-radius: 4px;
+    padding: 3px 6px;
+    font-size: 12px;
+    cursor: pointer;
+}

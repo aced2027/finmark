@@ -1,0 +1,270 @@
+/* ── Sidebar shell ─────────────────────────────────────────────────────────── */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 44px;
+    min-width: 44px;
+    background: #131722;
+    border-right: 1px solid #2a2e39;
+    padding: 6px 0;
+    gap: 2px;
+    z-index: 20;
+    overflow: visible;
+    flex-shrink: 0;
+    height: 100%;
+}
+
+/* Collapse toggle at top of sidebar */
+.collapseBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 22px;
+    border-radius: 5px;
+    background: none;
+    border: none;
+    color: #484f58;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.12s, color 0.12s;
+    flex-shrink: 0;
+    margin-bottom: 2px;
+}
+
+.collapseBtn:hover {
+    background: #2a2e39;
+    color: #d1d4dc;
+}
+
+/* ── Icon button ──────────────────────────────────────────────────────────── */
+.iconBtn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 6px;
+    background: none;
+    border: none;
+    color: #787b86;
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s;
+    flex-shrink: 0;
+}
+
+.iconBtn:hover {
+    background: #2a2e39;
+    color: #d1d4dc;
+}
+
+.active {
+    background: #1e2230 !important;
+    color: #2962ff !important;
+}
+
+/* Tiny expand arrow in bottom-right of icon button */
+.arrow {
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+    font-size: 6px;
+    color: #4a4f5e;
+    line-height: 1;
+    pointer-events: none;
+}
+
+/* ── Separator ──────────────────────────────────────────────────────────────── */
+.sep {
+    width: 28px;
+    height: 1px;
+    background: #2a2e39;
+    margin: 4px 0;
+    flex-shrink: 0;
+}
+
+.spacer {
+    flex: 1;
+}
+
+/* ── Flyout wrapper (for positioning) ────────────────────────────────────── */
+.groupWrap {
+    position: relative;
+}
+
+/* ── Flyout panel ─────────────────────────────────────────────────────────── */
+.flyout {
+    position: absolute;
+    left: calc(100% + 6px);
+    top: 0;
+    background: #1e222d;
+    border: 1px solid #2a2e39;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65);
+    z-index: 9999;
+    min-width: 210px;
+    overflow: hidden;
+    animation: flyIn 0.12s ease;
+    padding: 4px 0;
+}
+
+@keyframes flyIn {
+    from {
+        opacity: 0;
+        transform: translateX(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ── Flyout section title (for drawing groups) ─────────────────────────────── */
+.flyoutTitle {
+    padding: 7px 14px 5px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #484f58;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid #2a2e39;
+    margin-bottom: 2px;
+}
+
+/* ── Simple text-only flyout item (drawing tools list) ────────────────────── */
+.flyoutItem {
+    display: block;
+    width: 100%;
+    padding: 8px 14px;
+    background: none;
+    border: none;
+    text-align: left;
+    color: #d1d4dc;
+    font-size: 12.5px;
+    cursor: pointer;
+    transition: background 0.08s;
+    white-space: nowrap;
+    font-family: inherit;
+}
+
+.flyoutItem:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* ── Icon + label + optional star row (cursor modes) ─────────────────────── */
+.flyoutItemRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 9px 14px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.08s;
+    font-family: inherit;
+    text-align: left;
+}
+
+.flyoutItemRow:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.flyoutItemIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    color: #d1d4dc;
+    flex-shrink: 0;
+}
+
+.flyoutItemLabel {
+    flex: 1;
+    font-size: 13px;
+    font-weight: 500;
+    color: #d1d4dc;
+    white-space: nowrap;
+}
+
+/* Star badge (⭐ favourite) */
+.star {
+    font-size: 13px;
+    color: #f7c948;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+/* Active state for both item types */
+.flyoutActive {
+    background: rgba(41, 98, 255, 0.1) !important;
+}
+
+.flyoutActive .flyoutItemLabel,
+.flyoutActive .flyoutItemIcon,
+.flyoutActive {
+    color: #2962ff;
+}
+
+/* ── Flyout divider ─────────────────────────────────────────────────────────── */
+.flyoutDivider {
+    height: 1px;
+    background: #2a2e39;
+    margin: 4px 0;
+}
+
+/* ── Toggle row (Values tooltip on long press) ───────────────────────────── */
+.flyoutToggleRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    gap: 8px;
+}
+
+.flyoutToggleLabel {
+    font-size: 12px;
+    color: #d1d4dc;
+    white-space: nowrap;
+    flex: 1;
+    font-family: inherit;
+}
+
+/* iOS-style toggle switch */
+.toggle {
+    position: relative;
+    width: 36px;
+    height: 20px;
+    border-radius: 10px;
+    background: #2a2e39;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s;
+    flex-shrink: 0;
+}
+
+.toggleOn {
+    background: #2962ff;
+}
+
+.toggleThumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform 0.2s;
+    display: block;
+    pointer-events: none;
+}
+
+.toggleOn .toggleThumb {
+    transform: translateX(16px);
+}

@@ -1,0 +1,360 @@
+/* TradingView-exact chart toolbar (second bar below topnav) */
+.toolbar {
+    display: flex;
+    align-items: center;
+    height: 38px;
+    min-height: 38px;
+    padding: 0 8px;
+    background: #131722;
+    border-bottom: 1px solid #2a2e39;
+    gap: 4px;
+    flex-shrink: 0;
+    z-index: 40;
+    /* No overflow — keep everything visible */
+    overflow: visible;
+}
+
+.vsep {
+    width: 1px;
+    height: 20px;
+    background: #2a2e39;
+    flex-shrink: 0;
+    margin: 0 2px;
+}
+
+/* Symbol button */
+.symbolBtn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    background: none;
+    border: none;
+    border-radius: 4px;
+    color: #d1d4dc;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.1s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.symbolBtn:hover {
+    background: #2a2e39;
+}
+
+.symbolName {
+    letter-spacing: 0.02em;
+}
+
+.caret {
+    color: #787b86;
+    flex-shrink: 0;
+}
+
+/* Timeframes */
+.tfGroup {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: nowrap;
+    overflow: hidden;
+}
+
+.tfBtn {
+    padding: 3px 7px;
+    background: none;
+    border: none;
+    border-radius: 4px;
+    color: #787b86;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.1s, background 0.1s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.tfBtn:hover {
+    color: #d1d4dc;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.tfActive {
+    color: #2962ff !important;
+    background: rgba(41, 98, 255, 0.1) !important;
+}
+
+/* Chart type picker */
+.ctWrap {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.ctBtn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 8px;
+    background: none;
+    border: none;
+    border-radius: 4px;
+    color: #787b86;
+    font-size: 12px;
+    cursor: pointer;
+    transition: color 0.1s, background 0.1s;
+    white-space: nowrap;
+}
+
+.ctBtn:hover {
+    color: #d1d4dc;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.ctLabel {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.ctMenu {
+    position: fixed;
+    top: 77px;
+    /* below both bars */
+    background: #1e222d;
+    border: 1px solid #2a2e39;
+    border-radius: 6px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    min-width: 160px;
+    overflow: hidden;
+    animation: fadeDown 0.1s ease;
+}
+
+@keyframes fadeDown {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.ctItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 8px 12px;
+    background: none;
+    border: none;
+    color: #d1d4dc;
+    font-size: 12px;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.08s;
+}
+
+.ctItem:hover {
+    background: #2a2e39;
+}
+
+.ctItemActive {
+    color: #2962ff !important;
+    background: rgba(41, 98, 255, 0.1) !important;
+}
+
+.ctItemIcon {
+    display: flex;
+    align-items: center;
+    color: inherit;
+    opacity: 0.9;
+}
+
+/* Scale buttons */
+.scaleGroup {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-shrink: 0;
+}
+
+.scaleBtn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 7px;
+    background: none;
+    border: none;
+    border-radius: 4px;
+    color: #787b86;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.1s, background 0.1s;
+    white-space: nowrap;
+}
+
+.scaleBtn:hover {
+    color: #d1d4dc;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.scaleBtnActive {
+    color: #2962ff !important;
+    background: rgba(41, 98, 255, 0.1) !important;
+}
+
+/* ── Symbol search modal ── */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 9999;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 80px;
+}
+
+.modal {
+    background: #1e222d;
+    border: 1px solid #2a2e39;
+    border-radius: 8px;
+    width: 540px;
+    max-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.8);
+}
+
+.searchRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-bottom: 1px solid #2a2e39;
+    flex-shrink: 0;
+}
+
+.searchInput {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    color: #d1d4dc;
+    font-size: 14px;
+}
+
+.searchInput::placeholder {
+    color: #484f58;
+}
+
+.closeBtn {
+    background: none;
+    border: none;
+    color: #787b86;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.closeBtn:hover {
+    color: #d1d4dc;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.tabs {
+    display: flex;
+    padding: 0 14px;
+    border-bottom: 1px solid #2a2e39;
+    flex-shrink: 0;
+}
+
+.tab {
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #787b86;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.1s, border-color 0.1s;
+}
+
+.tab:hover {
+    color: #d1d4dc;
+}
+
+.tabActive {
+    color: #d1d4dc;
+    border-bottom-color: #2962ff;
+}
+
+.resultList {
+    overflow-y: auto;
+    flex: 1;
+}
+
+.resultRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 14px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.08s;
+}
+
+.resultRow:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.resultIcon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #2a2e39;
+    color: #d1d4dc;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.resultInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.resultSym {
+    font-size: 13px;
+    font-weight: 600;
+    color: #d1d4dc;
+}
+
+.resultDesc {
+    font-size: 11px;
+    color: #787b86;
+}
+
+.exchangeTag {
+    font-size: 10px;
+    font-weight: 600;
+    color: #787b86;
+    background: #2a2e39;
+    padding: 2px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+}
