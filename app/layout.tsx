@@ -4,6 +4,7 @@ import "./globals.css";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
 import TradingViewTicker from "@/components/layout/TradingViewTicker";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -21,6 +22,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
+      <head>
+        {/* Suppress TradingView iframe errors */}
+        <Script id="suppress-tradingview-errors" strategy="beforeInteractive">
+          {`
+            window.addEventListener('error', function(e) {
+              if (e.message && e.message.includes('contentWindow')) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+              }
+            }, true);
+          `}
+        </Script>
+      </head>
       <body className={`${inter.variable} bg-background text-foreground`}>
         <div className="flex h-screen overflow-hidden">
           {/* Sidebar */}

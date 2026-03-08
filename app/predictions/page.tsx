@@ -1,192 +1,252 @@
 "use client";
-import { Calendar, TrendingUp, TrendingDown, AlertCircle } from "lucide-react";
+
+import { useState } from "react";
+import { Calendar, Clock, TrendingUp, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
+
+interface BlogPost {
+  id: string;
+  title: string;
+  date: string;
+  excerpt: string;
+  content: {
+    marketOverview: string;
+    topPicks: string;
+    technicalAnalysis: string;
+    risks: string;
+  };
+  readTime: string;
+  featured: boolean;
+}
+
+// Sample posts - In production, fetch from WordPress API
+const BLOG_POSTS: BlogPost[] = [
+  {
+    id: "1",
+    title: "Weekly Market Analysis - Jan 15-19, 2024",
+    date: "2024-01-15",
+    excerpt: "Markets showed strong momentum this week with Nifty gaining 2.3%. Banking and IT sectors led the rally while FMCG remained under pressure...",
+    content: {
+      marketOverview: "Markets showed strong momentum this week with Nifty gaining 2.3%. Banking and IT sectors led the rally while FMCG remained under pressure. FII inflows continued for the third consecutive week, adding ₹2,890 crores. The overall sentiment remains cautiously optimistic as we head into earnings season.",
+      topPicks: "1. RELIANCE (BUY)\n   Entry: ₹2,840-2,860\n   Target: ₹3,100\n   Stop Loss: ₹2,750\n   Rationale: Strong support at 2,800. RSI oversold. Positive MACD divergence.\n\n2. TATAMOTORS (BUY)\n   Entry: ₹980-990\n   Target: ₹1,150\n   Stop Loss: ₹920\n   Rationale: EV momentum strong. Cup & handle breakout.\n\n3. ITC (BUY)\n   Entry: ₹475-480\n   Target: ₹520\n   Stop Loss: ₹460\n   Rationale: Defensive play. Strong dividend yield.",
+      technicalAnalysis: "NIFTY 50 Technical View:\n• Current Level: 22,485\n• Support: 22,350 | 22,200 | 22,000\n• Resistance: 22,600 | 22,750 | 23,000\n• RSI: 45 (Neutral)\n• MACD: Bearish crossover\n• Trend: Consolidation phase\n\nKey Observations:\n- Trading in narrow range\n- Volume declining\n- Watch for breakout above 22,750",
+      risks: "Key Risks:\n• US Fed policy meeting on Wednesday\n• Crude oil prices volatile\n• Q3 earnings season starting\n• Global recession fears\n\nRisk Management:\n• Position size: 2-3% per trade\n• Always use stop losses\n• Avoid overleveraging",
+    },
+    readTime: "5 min read",
+    featured: true,
+  },
+  {
+    id: "2",
+    title: "Market Outlook - Bullish Momentum Continues",
+    date: "2024-01-08",
+    excerpt: "Strong start to the year with Nifty breaking above 22,500. Auto and Pharma sectors outperforming. Technical indicators suggest further upside...",
+    content: {
+      marketOverview: "Strong start to the year with Nifty breaking above 22,500. Auto and Pharma sectors outperforming.",
+      topPicks: "1. TATAMOTORS (BUY)\n2. SUNPHARMA (BUY)\n3. MARUTI (BUY)",
+      technicalAnalysis: "Nifty showing strong bullish momentum with higher highs and higher lows.",
+      risks: "Watch for profit booking at higher levels. Keep trailing stop losses.",
+    },
+    readTime: "4 min read",
+    featured: false,
+  },
+  {
+    id: "3",
+    title: "Banking Sector Analysis - Time to Accumulate",
+    date: "2024-01-01",
+    excerpt: "Banking stocks have corrected 8-10% from recent highs. This presents a good accumulation opportunity for long-term investors...",
+    content: {
+      marketOverview: "Banking stocks have corrected 8-10% from recent highs. NPA concerns overdone.",
+      topPicks: "1. HDFCBANK (BUY)\n2. ICICIBANK (BUY)\n3. KOTAKBANK (BUY)",
+      technicalAnalysis: "Bank Nifty finding support at 46,500. RSI oversold.",
+      risks: "RBI policy uncertainty. Asset quality concerns.",
+    },
+    readTime: "6 min read",
+    featured: false,
+  },
+];
 
 export default function PredictionsPage() {
+  const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+
+  if (selectedPost) {
+    // Single Post View
     return (
-        <div className="flex-1 flex flex-col h-[calc(100vh-5.5rem)] overflow-hidden">
-            {/* Main scrollable area */}
-            <div className="flex-1 overflow-y-auto custom-scrollbar">
-                <div className="p-4 lg:p-6">
-                    <div className="max-w-4xl mx-auto space-y-6">
-                        {/* Header */}
-                        <div className="glass-card p-6">
-                            <div className="flex items-center gap-3 mb-4">
-                                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500/20 to-pink-500/20 border border-orange-500/30 flex items-center justify-center shadow-[0_0_20px_rgba(249,115,22,0.15)]">
-                                    <span className="text-2xl">🔮</span>
-                                </div>
-                                <div>
-                                    <h1 className="text-2xl font-bold text-white tracking-tight">
-                                        Weekly Trading Predictions
-                                    </h1>
-                                    <p className="text-sm text-slate-400">
-                                        Expert analysis and market forecasts
-                                    </p>
-                                </div>
-                            </div>
-                            
-                            <div className="flex items-center gap-4 text-xs text-slate-400">
-                                <div className="flex items-center gap-1.5">
-                                    <Calendar className="w-4 h-4" />
-                                    <span>{new Date().toLocaleDateString("en-US", { 
-                                        weekday: "long", 
-                                        year: "numeric", 
-                                        month: "long", 
-                                        day: "numeric" 
-                                    })}</span>
-                                </div>
-                                <span>•</span>
-                                <span>Week {Math.ceil((new Date().getDate()) / 7)}, {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}</span>
-                            </div>
-                        </div>
+      <div className="flex-1 overflow-y-auto custom-scrollbar bg-[#0f1117]">
+        <div className="max-w-4xl mx-auto p-6">
+          {/* Back Button */}
+          <button
+            onClick={() => setSelectedPost(null)}
+            className="mb-6 text-sm text-slate-400 hover:text-white transition-colors"
+          >
+            ← Back to all posts
+          </button>
 
-                        {/* Market Overview */}
-                        <div className="glass-card p-6">
-                            <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                                <TrendingUp className="w-5 h-5 text-emerald-400" />
-                                Market Overview
-                            </h2>
-                            <div className="prose prose-invert max-w-none">
-                                <p className="text-slate-300 leading-relaxed mb-4">
-                                    Write your market overview here. Discuss the overall market sentiment, major economic events, 
-                                    and key factors influencing the markets this week.
-                                </p>
-                                <p className="text-slate-300 leading-relaxed">
-                                    Include analysis of global markets, sector performance, and any significant news that could 
-                                    impact trading decisions.
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* Key Predictions */}
-                        <div className="glass-card p-6">
-                            <h2 className="text-lg font-bold text-white mb-4">Key Predictions</h2>
-                            
-                            {/* Prediction Card 1 - Bullish */}
-                            <div className="space-y-4">
-                                <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-lg p-4">
-                                    <div className="flex items-start gap-3">
-                                        <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
-                                            <TrendingUp className="w-4 h-4 text-emerald-400" />
-                                        </div>
-                                        <div className="flex-1">
-                                            <h3 className="text-base font-bold text-white mb-2">
-                                                Bullish Prediction Title
-                                            </h3>
-                                            <p className="text-sm text-slate-300 mb-3">
-                                                Write your bullish prediction here. Explain why you expect this stock/sector 
-                                                to perform well this week. Include technical analysis, fundamental factors, 
-                                                and price targets.
-                                            </p>
-                                            <div className="flex flex-wrap gap-2">
-                                                <span className="px-2 py-1 rounded text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                                                    Target: +5-8%
-                                                </span>
-                                                <span className="px-2 py-1 rounded text-xs font-medium bg-slate-700/50 text-slate-300">
-                                                    Technology Sector
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Prediction Card 2 - Bearish */}
-                                <div className="bg-red-500/5 border border-red-500/20 rounded-lg p-4">
-                                    <div className="flex items-start gap-3">
-                                        <div className="w-8 h-8 rounded-lg bg-red-500/20 flex items-center justify-center flex-shrink-0">
-                                            <TrendingDown className="w-4 h-4 text-red-400" />
-                                        </div>
-                                        <div className="flex-1">
-                                            <h3 className="text-base font-bold text-white mb-2">
-                                                Bearish Prediction Title
-                                            </h3>
-                                            <p className="text-sm text-slate-300 mb-3">
-                                                Write your bearish prediction here. Explain the risks and why you expect 
-                                                downward pressure. Include support levels and risk management strategies.
-                                            </p>
-                                            <div className="flex flex-wrap gap-2">
-                                                <span className="px-2 py-1 rounded text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/20">
-                                                    Target: -3-5%
-                                                </span>
-                                                <span className="px-2 py-1 rounded text-xs font-medium bg-slate-700/50 text-slate-300">
-                                                    Energy Sector
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Prediction Card 3 - Neutral/Watch */}
-                                <div className="bg-blue-500/5 border border-blue-500/20 rounded-lg p-4">
-                                    <div className="flex items-start gap-3">
-                                        <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                                            <AlertCircle className="w-4 h-4 text-blue-400" />
-                                        </div>
-                                        <div className="flex-1">
-                                            <h3 className="text-base font-bold text-white mb-2">
-                                                Watch List / Neutral Outlook
-                                            </h3>
-                                            <p className="text-sm text-slate-300 mb-3">
-                                                Stocks or sectors to watch closely. Explain the uncertainty and what 
-                                                catalysts could trigger movement in either direction.
-                                            </p>
-                                            <div className="flex flex-wrap gap-2">
-                                                <span className="px-2 py-1 rounded text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">
-                                                    Wait & Watch
-                                                </span>
-                                                <span className="px-2 py-1 rounded text-xs font-medium bg-slate-700/50 text-slate-300">
-                                                    Financial Services
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Technical Analysis */}
-                        <div className="glass-card p-6">
-                            <h2 className="text-lg font-bold text-white mb-4">Technical Analysis</h2>
-                            <div className="prose prose-invert max-w-none">
-                                <p className="text-slate-300 leading-relaxed mb-4">
-                                    Provide detailed technical analysis here. Discuss key support and resistance levels, 
-                                    chart patterns, indicators (RSI, MACD, Moving Averages), and volume analysis.
-                                </p>
-                                <ul className="text-slate-300 space-y-2 list-disc list-inside">
-                                    <li>Key support level: Write your analysis</li>
-                                    <li>Key resistance level: Write your analysis</li>
-                                    <li>Trend analysis: Write your analysis</li>
-                                    <li>Volume patterns: Write your analysis</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        {/* Risk Factors */}
-                        <div className="glass-card p-6">
-                            <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                                <AlertCircle className="w-5 h-5 text-orange-400" />
-                                Risk Factors & Disclaimer
-                            </h2>
-                            <div className="prose prose-invert max-w-none">
-                                <p className="text-slate-300 leading-relaxed mb-4">
-                                    Outline the key risks to watch this week. Include geopolitical events, economic data 
-                                    releases, earnings reports, and other factors that could impact your predictions.
-                                </p>
-                                <div className="bg-orange-500/5 border border-orange-500/20 rounded-lg p-4 mt-4">
-                                    <p className="text-xs text-slate-400 leading-relaxed">
-                                        <strong className="text-orange-400">Disclaimer:</strong> This content is for 
-                                        informational and educational purposes only. It should not be considered financial 
-                                        advice. Always do your own research and consult with a qualified financial advisor 
-                                        before making investment decisions. Past performance does not guarantee future results.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Bottom Spacing */}
-                        <div className="h-8"></div>
-                    </div>
+          {/* Post Content */}
+          <article className="glass-card p-8">
+            {/* Header */}
+            <div className="mb-8 pb-6 border-b border-white/10">
+              <h1 className="text-4xl font-bold text-white mb-4">{selectedPost.title}</h1>
+              <div className="flex items-center gap-4 text-sm text-slate-400">
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-4 h-4" />
+                  <span>{new Date(selectedPost.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
                 </div>
+                <span>•</span>
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4" />
+                  <span>{selectedPost.readTime}</span>
+                </div>
+              </div>
             </div>
+
+            {/* Market Overview */}
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold text-white mb-4">Market Overview</h2>
+              <p className="text-slate-300 leading-relaxed whitespace-pre-wrap">{selectedPost.content.marketOverview}</p>
+            </section>
+
+            {/* Top Picks */}
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold text-white mb-4">Top Stock Picks</h2>
+              <div className="bg-[#1a1d29] rounded-lg p-6 border border-white/5">
+                <pre className="text-slate-300 leading-relaxed whitespace-pre-wrap font-sans">{selectedPost.content.topPicks}</pre>
+              </div>
+            </section>
+
+            {/* Technical Analysis */}
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold text-white mb-4">Technical Analysis</h2>
+              <div className="bg-[#1a1d29] rounded-lg p-6 border border-white/5">
+                <pre className="text-slate-300 leading-relaxed whitespace-pre-wrap font-sans">{selectedPost.content.technicalAnalysis}</pre>
+              </div>
+            </section>
+
+            {/* Risks */}
+            <section className="mb-8">
+              <h2 className="text-2xl font-semibold text-white mb-4">Risks to Watch</h2>
+              <div className="bg-red-500/5 border border-red-500/20 rounded-lg p-6">
+                <pre className="text-slate-300 leading-relaxed whitespace-pre-wrap font-sans">{selectedPost.content.risks}</pre>
+              </div>
+            </section>
+
+            {/* Disclaimer */}
+            <div className="mt-8 pt-6 border-t border-white/10">
+              <p className="text-xs text-slate-500 leading-relaxed">
+                <span className="font-semibold text-red-400">Disclaimer:</span> This analysis is for educational purposes only. 
+                Not financial advice. Always DYOR before investing. Trading involves substantial risk of loss.
+              </p>
+            </div>
+          </article>
         </div>
+      </div>
     );
+  }
+
+  // Blog List View
+  return (
+    <div className="flex-1 overflow-y-auto custom-scrollbar bg-[#0f1117]">
+      <div className="max-w-7xl mx-auto p-6">
+        {/* Header */}
+        <div className="mb-12 text-center">
+          <h1 className="text-4xl font-bold text-white mb-3">Weekly Predictions</h1>
+          <p className="text-lg text-slate-400">Expert market analysis and trading insights</p>
+        </div>
+
+        {/* Featured Post */}
+        {BLOG_POSTS.filter(p => p.featured).map((post, index) => (
+          <motion.article
+            key={post.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="glass-card overflow-hidden mb-12 group cursor-pointer hover:border-emerald-500/30 transition-all"
+            onClick={() => setSelectedPost(post)}
+          >
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Featured Image */}
+              <div className="h-80 bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 relative overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <TrendingUp className="w-24 h-24 text-emerald-400/30" />
+                </div>
+                <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-emerald-500 text-white text-xs font-semibold">
+                  Featured
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="p-8 flex flex-col justify-center">
+                <div className="flex items-center gap-3 text-xs text-slate-500 mb-3">
+                  <Calendar className="w-3.5 h-3.5" />
+                  <span>{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                  <span>•</span>
+                  <Clock className="w-3.5 h-3.5" />
+                  <span>{post.readTime}</span>
+                </div>
+
+                <h2 className="text-3xl font-bold text-white mb-4 group-hover:text-emerald-400 transition-colors">
+                  {post.title}
+                </h2>
+                
+                <p className="text-slate-400 mb-6 leading-relaxed">
+                  {post.excerpt}
+                </p>
+
+                <div className="flex items-center gap-2 text-emerald-400 font-medium text-sm">
+                  <span>Read full analysis</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </div>
+          </motion.article>
+        ))}
+
+        {/* Recent Posts Grid */}
+        <div>
+          <h2 className="text-2xl font-bold text-white mb-6">Recent Posts</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {BLOG_POSTS.filter(p => !p.featured).map((post, index) => (
+              <motion.article
+                key={post.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="glass-card overflow-hidden group cursor-pointer hover:border-emerald-500/30 transition-all"
+                onClick={() => setSelectedPost(post)}
+              >
+                {/* Image */}
+                <div className="h-48 bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 relative overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <TrendingUp className="w-16 h-16 text-violet-400/30" />
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-5">
+                  <div className="flex items-center gap-2 text-xs text-slate-500 mb-3">
+                    <Calendar className="w-3.5 h-3.5" />
+                    <span>{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+                    <span>•</span>
+                    <Clock className="w-3.5 h-3.5" />
+                    <span>{post.readTime}</span>
+                  </div>
+
+                  <h3 className="text-lg font-bold text-white mb-2 line-clamp-2 group-hover:text-emerald-400 transition-colors">
+                    {post.title}
+                  </h3>
+                  
+                  <p className="text-sm text-slate-400 line-clamp-3 mb-4">
+                    {post.excerpt}
+                  </p>
+
+                  <div className="flex items-center gap-2 text-emerald-400 text-sm font-medium">
+                    <span>Read more</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }

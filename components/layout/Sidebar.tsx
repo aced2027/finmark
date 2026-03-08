@@ -23,10 +23,8 @@ const navItems = [
     { href: "/us-markets", label: "US Markets", icon: BarChart2 },
     { href: "/forex", label: "Forex", icon: TrendingUp },
     { href: "/crypto", label: "Crypto", icon: Bitcoin },
-    { href: "/earnings", label: "Earnings", icon: BookOpen },
     { href: "/predictions", label: "Predictions", icon: TrendingUp },
     { href: "/screener", label: "Screener", icon: Search },
-    { href: "/watchlist", label: "Watchlist", icon: Star },
     { href: "/ai-insights", label: "AI Insights", icon: Zap },
 ];
 
